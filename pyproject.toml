@@ -1,0 +1,68 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "better-recipes"
+version = "0.0.1"
+dependencies = ["requests"]
+requires-python = ">=3.11"
+authors = [{ name = "Robin Merz", email = "pradyun@example.com" }]
+maintainers = [{ name = "Robin Merz" }]
+description = "Our take on a simply better recipes app"
+readme = "README.md"
+license = { file = "LICENSE.txt" }
+keywords = ["recipes", "python", "web", "api"]
+classifiers = [
+    "Development Status :: 0 - Alpha",
+    "Programming Language :: Python",
+]
+
+[tool.ruff]
+# Exclude directories.
+exclude = [
+    ".eggs",
+    ".git",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+# Same as Black.
+line-length = 88
+indent-width = 4
+
+# Assume Python 3.8
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
+ignore = []
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
+docstring-code-line-length = "dynamic"

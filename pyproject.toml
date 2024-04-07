@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "better-recipes"
 version = "0.0.1"
-dependencies = ["requests"]
+dependencies = ["requests", "pydantic"]
 requires-python = ">=3.11"
 authors = [{ name = "Robin Merz", email = "pradyun@example.com" }]
 maintainers = [{ name = "Robin Merz" }]
@@ -66,3 +66,19 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 docstring-code-format = false
 docstring-code-line-length = "dynamic"
+
+# mypy settings
+[tool.mypy]
+python_version = "3.11"
+
+scripts_are_modules = true
+show_column_numbers = true
+ignore_missing_imports = true
+
+# be strict
+disallow_untyped_calls = false
+warn_return_any = false
+strict_optional = false
+warn_no_return = true
+warn_redundant_casts = true
+warn_unused_ignores = true

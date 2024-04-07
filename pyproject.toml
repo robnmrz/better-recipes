@@ -7,7 +7,7 @@ name = "better-recipes"
 version = "0.0.1"
 dependencies = ["requests"]
 requires-python = ">=3.11"
-authors = [{ name = "Robin Merz", email = "pradyun@example.com" }]
+authors = [{ name = "Robin Merz"}]
 maintainers = [{ name = "Robin Merz" }]
 description = "Our take on a simply better recipes app"
 readme = "README.md"

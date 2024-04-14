@@ -23,3 +23,4 @@ class Unit(BaseEnum):
     MILLILITER = "ml"
     TSP = "tsp"
     TBSP = "tbsp"
+    PCS = "pcs"

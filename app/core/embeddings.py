@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
+from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, PrivateAttr
 from sentence_transformers import SentenceTransformer
 
 
@@ -40,17 +41,13 @@ class SentenceTransformerEmbedding(Embeddings):
     st_model_id: str = DEFAUTL_EMBEDDING_MODEL
     st_model_kwargs: dict = Field(default_factory=dict)
 
-    def __init__(self, **kwargs):
-        """
-        Init model client used for encoding
-        """
-        super().__init__(**kwargs)
-        self.client: SentenceTransformer = SentenceTransformer(
-            self.st_model_id, **self.st_model_kwargs
-        )
+    _client: SentenceTransformer = PrivateAttr()
+
+    def model_post_init(self, __context: Any) -> None:
+        self._client = SentenceTransformer(self.st_model_id, **self.st_model_kwargs)
 
     def embed_documents(self, texts: list[str], **kwargs) -> list[list[float]]:
-        return self.client.encode(texts, **kwargs)
+        return self._client.encode(texts, **kwargs)
 
     def embed_query(self, text: str) -> list[float]:
-        return self.client.encode([text])[0]
+        return self._client.encode([text])[0]

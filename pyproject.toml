@@ -7,8 +7,8 @@ name = "better-recipes"
 version = "0.0.1"
 dependencies = ["requests"]
 requires-python = ">=3.10"
-authors = [{ name = "Robin Merz", "Clémence Nuding"}]
-maintainers = [{ name = "Robin Merz", "Clémence Nuding" }]
+authors = [{ name = "Robin Merz"}, { name = "Clémence Nuding"}]
+maintainers = [{ name = "Robin Merz"}, { name = "Clémence Nuding"}]
 description = "Our take on a simply better recipes app"
 readme = "README.md"
 license = { file = "LICENSE.txt" }

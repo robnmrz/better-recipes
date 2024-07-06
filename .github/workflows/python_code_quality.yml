@@ -1,0 +1,71 @@
+name: Code style and type hinting
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+env:
+  POETRY_VERSION: "1.8.2"
+
+jobs:
+  code_quality:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('poetry.lock') }}-${{ hashFiles('.github/actions/install-env/action.yml') }}-${{ steps.setup-python.outputs.python-version }}
+
+      - name: Install Python poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+          virtualenvs-path: .venv
+
+      - name: Install dependencies
+        shell: bash
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction
+
+      - name: Determine changed python files
+        id: changed-py-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            *.py
+            **/*.py
+
+      - name: Activate environment
+        shell: bash
+        run: source .venv/bin/activate
+
+      - name: Analyse code style with ruff
+        run: |
+          poetry run ruff check .
+
+      - name: Analyse type hinting with mypy
+#        if: steps.changed-py-files.outputs.any_changed == 'true'
+        run: |
+          poetry run mypy .
+#          poetry run mypy ${{ steps.changed-py-files.outputs.all_changed_files }}
+
+      - name: Run unit tests
+        run: |
+          poetry run pytest

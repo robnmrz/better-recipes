@@ -10,6 +10,7 @@ python = "^3.10"
 requests = "^2.32.3"
 Flask = "^3.0.3"
 pydantic = "^2.8.2"
+recipe-scrapers = "^14.57.1"
 
 [tool.poetry.group.dev.dependencies]
 openai = "^1.35.13"
